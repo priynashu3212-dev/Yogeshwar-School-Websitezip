@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "Yogeshwar Sr Sec School"
+version = "1.0.0"
+id = "artifacts/yogeshwar-school"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21566
+
+[services.development]
+run = "pnpm --filter @workspace/yogeshwar-school run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/yogeshwar-school", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/yogeshwar-school/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21566"
+BASE_PATH = "/"
