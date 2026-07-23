@@ -1,176 +1,616 @@
 import React from 'react';
 import Layout from '@/components/layout/Layout';
-import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen, Users, Trophy, MonitorPlay } from 'lucide-react';
+import { motion, animate, useInView } from 'framer-motion';
+import { ArrowRight, ArrowDown, BookOpen, Users, Trophy, MonitorPlay, CheckCircle2, GraduationCap, Award } from 'lucide-react';
 import { Link } from 'wouter';
 
 import imgBuilding from '@assets/image_1784784644604.png';
 import imgLibrary from '@assets/image_1784784678674.png';
 import imgDance from '@assets/image_1784784658855.png';
+import imgAdd2 from '@assets/image_1784784713330.png';
+import imgMusicRoom from '@assets/image_1784784692373.png';
 
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+/* ── Animated counter ────────────────────────────────── */
+const Counter = ({
+  from = 0,
+  to,
+  duration = 2.2,
+  suffix = '',
+  prefix = '',
+}: {
+  from?: number;
+  to: number;
+  duration?: number;
+  suffix?: string;
+  prefix?: string;
+}) => {
+  const nodeRef = React.useRef<HTMLSpanElement>(null);
+  const isInView = useInView(nodeRef, { once: true, margin: '-80px' });
+
+  React.useEffect(() => {
+    if (!isInView || !nodeRef.current) return;
+    const controls = animate(from, to, {
+      duration,
+      ease: 'easeOut',
+      onUpdate(value) {
+        if (!nodeRef.current) return;
+        const formatted =
+          to % 1 !== 0 ? value.toFixed(1) : Math.floor(value).toString();
+        nodeRef.current.textContent = prefix + formatted + suffix;
+      },
+    });
+    return () => controls.stop();
+  }, [isInView, from, to, duration, suffix, prefix]);
+
+  return (
+    <span ref={nodeRef}>
+      {prefix}
+      {from}
+      {suffix}
+    </span>
+  );
 };
 
+/* ── Stagger variants ────────────────────────────────── */
+const container = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.12 } },
+};
+const item = {
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: 'easeOut' } },
+};
+
+/* ══════════════════════════════════════════════════════ */
 export default function Home() {
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="relative min-h-[90dvh] flex items-center justify-center overflow-hidden">
+      {/* ── 1. HERO ──────────────────────────────────────── */}
+      <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-[#0F2044] pt-20">
+        {/* Background image */}
         <div className="absolute inset-0 z-0">
-          <img 
-            src={imgBuilding} 
-            alt="Yogeshwar School Building" 
-            className="w-full h-full object-cover object-center"
+          <img
+            src={imgBuilding}
+            alt="Yogeshwar School Campus"
+            className="w-full h-full object-cover object-center scale-105"
           />
-          <div className="absolute inset-0 bg-primary/70 mix-blend-multiply" />
-          <div className="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-transparent opacity-90" />
+          <div className="absolute inset-0 bg-[#0F2044]/78" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0F2044] via-[#0F2044]/55 to-transparent" />
         </div>
 
-        <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
+        {/* Noise overlay */}
+        <div className="absolute inset-0 z-0 opacity-30 [background-image:url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22 opacity=%220.4%22/%3E%3C/svg%3E')] mix-blend-overlay" />
+
+        <div className="container relative z-10 mx-auto px-6 lg:px-8 flex flex-col items-center text-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="max-w-4xl"
+            variants={container}
+            initial="hidden"
+            animate="visible"
+            className="max-w-5xl mx-auto"
           >
-            <span className="inline-block py-1 px-3 rounded-full bg-secondary/90 text-secondary-foreground text-sm font-semibold tracking-wider uppercase mb-6 shadow-lg">
-              Admissions Open 2024-25
-            </span>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-white leading-tight mb-6 drop-shadow-lg">
-              Empowering Minds, <br className="hidden md:block"/>
-              <span className="text-secondary italic">Shaping Futures.</span>
-            </h1>
-            <p className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl mx-auto font-medium">
-              Welcome to Yogeshwar Sr. Sec. School, Siwan. A community where traditional values meet modern excellence to nurture tomorrow's leaders.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/about" className="inline-flex items-center justify-center px-8 py-4 bg-secondary text-secondary-foreground font-bold rounded shadow-lg hover:bg-secondary/90 transition-all hover:-translate-y-1">
-                Discover Our Vision
+            <motion.div variants={item} className="mb-8 flex justify-center">
+              <span className="inline-flex items-center gap-2 py-2 px-5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold tracking-[0.2em] uppercase shadow-xl">
+                <span className="w-2 h-2 rounded-full bg-[#F97316] animate-pulse" />
+                Admissions Open 2024-25
+              </span>
+            </motion.div>
+
+            <motion.h1
+              variants={item}
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[96px] font-bold text-white leading-[1.05] mb-8 tracking-tight"
+            >
+              Empowering Minds,{' '}
+              <br className="hidden md:block" />
+              <span
+                className="italic"
+                style={{
+                  background: 'linear-gradient(90deg,#F97316,#FBBF24)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
+                Shaping Futures.
+              </span>
+            </motion.h1>
+
+            <motion.p
+              variants={item}
+              className="text-lg md:text-2xl text-white/80 mb-12 max-w-2xl mx-auto font-medium leading-relaxed"
+            >
+              Yogeshwar Sr. Sec. School, Siwan — where Indian values meet
+              world-class modern education.
+            </motion.p>
+
+            <motion.div
+              variants={item}
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+            >
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center px-10 py-5 bg-[#F97316] text-white text-lg font-bold rounded-full shadow-[0_0_50px_-10px_rgba(249,115,22,0.7)] hover:shadow-[0_0_70px_-10px_rgba(249,115,22,0.9)] hover:scale-105 transition-all duration-300"
+              >
+                Enquire Now
               </Link>
-              <Link href="/contact" className="inline-flex items-center justify-center px-8 py-4 bg-white text-primary font-bold rounded shadow-lg hover:bg-gray-50 transition-all hover:-translate-y-1">
-                Contact Us
+              <Link
+                href="/about"
+                className="inline-flex items-center justify-center px-10 py-5 bg-white/10 backdrop-blur-md border border-white/25 text-white text-lg font-bold rounded-full hover:bg-white/20 transition-all duration-300"
+              >
+                Discover Our Story
               </Link>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
+
+        {/* Scroll arrow */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 animate-bounce"
+        >
+          <ArrowDown className="w-7 h-7" />
+        </motion.div>
       </section>
 
-      {/* Stats/Highlights Bar */}
-      <section className="bg-white py-12 border-b border-border shadow-sm relative z-20 -mt-8 mx-4 md:mx-12 rounded-xl">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-border">
-            {[
-              { label: 'CBSE Affiliated', value: '100%', icon: BookOpen },
-              { label: 'Experienced Staff', value: '30+', icon: Users },
-              { label: 'Board Merit', value: '92.5%', icon: Trophy },
-              { label: 'Smart Classes', value: '100%', icon: MonitorPlay },
-            ].map((stat, i) => (
-              <motion.div 
-                key={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeIn}
-                className="flex flex-col items-center text-center px-4"
+      {/* ── 2. ANIMATED STATS ─────────────────────────────── */}
+      <section className="py-0 bg-white relative z-20">
+        <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-gray-100">
+          {[
+            {
+              icon: Award,
+              value: 100,
+              suffix: '%',
+              label: 'CBSE Affiliated',
+              color: '#F97316',
+            },
+            {
+              icon: Users,
+              value: 30,
+              suffix: '+',
+              label: 'Experienced Staff',
+              color: '#0F2044',
+            },
+            {
+              icon: Trophy,
+              value: 92.5,
+              suffix: '%',
+              label: 'Top Board Merit',
+              color: '#F97316',
+            },
+            {
+              icon: MonitorPlay,
+              value: 100,
+              suffix: '%',
+              label: 'Smart Classes',
+              color: '#0F2044',
+            },
+          ].map((stat, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.6 }}
+              className="flex flex-col items-center justify-center text-center py-14 px-6 group hover:bg-[#0F2044] transition-colors duration-500"
+            >
+              <div
+                className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 transition-colors duration-500 group-hover:bg-white/10"
+                style={{ background: `${stat.color}18` }}
               >
-                <stat.icon className="w-8 h-8 text-secondary mb-3 opacity-80" />
-                <h3 className="text-3xl font-serif font-bold text-primary mb-1">{stat.value}</h3>
-                <p className="text-sm text-muted-foreground font-medium uppercase tracking-wide">{stat.label}</p>
-              </motion.div>
-            ))}
-          </div>
+                <stat.icon
+                  className="w-7 h-7 transition-colors duration-500 group-hover:text-[#F97316]"
+                  style={{ color: stat.color }}
+                />
+              </div>
+              <p
+                className="text-5xl md:text-6xl font-extrabold leading-none mb-3 transition-colors duration-500 group-hover:text-white"
+                style={{ color: stat.color }}
+              >
+                <Counter to={stat.value} suffix={stat.suffix} />
+              </p>
+              <p className="text-sm font-bold uppercase tracking-[0.15em] text-gray-500 group-hover:text-white/70 transition-colors duration-500">
+                {stat.label}
+              </p>
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* About Teaser Section */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div 
+      {/* ── 3. ABOUT TEASER ──────────────────────────────── */}
+      <section className="py-32 md:py-44 bg-[#FAFAF7] relative overflow-hidden">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+            <motion.div
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeIn}
+              viewport={{ once: true, margin: '-80px' }}
+              variants={container}
             >
-              <h2 className="text-3xl md:text-5xl font-serif font-bold text-primary mb-6">
-                A Legacy of <br/><span className="text-secondary">Excellence.</span>
-              </h2>
-              <p className="text-lg text-foreground/80 mb-6 leading-relaxed">
-                At Yogeshwar Sr. Sec. School, we believe in providing a holistic educational experience. Our carefully crafted curriculum balances rigorous academics with rich extracurricular programs, ensuring every student develops into a well-rounded individual ready to face global challenges.
-              </p>
-              <ul className="space-y-4 mb-8">
+              <motion.div variants={item} className="flex items-center gap-3 mb-6">
+                <div className="h-px w-10 bg-[#F97316]" />
+                <span className="text-[#F97316] font-bold uppercase tracking-[0.2em] text-sm">
+                  Our Heritage
+                </span>
+              </motion.div>
+              <motion.h2
+                variants={item}
+                className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#0F2044] mb-8 leading-[1.05]"
+              >
+                A Legacy of{' '}
+                <span
+                  style={{
+                    background: 'linear-gradient(90deg,#F97316,#FBBF24)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}
+                >
+                  True Excellence.
+                </span>
+              </motion.h2>
+              <motion.p
+                variants={item}
+                className="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed font-medium"
+              >
+                At Yogeshwar Sr. Sec. School, education goes beyond textbooks.
+                We craft an environment where academic rigor meets character
+                building — ensuring every student develops into a confident,
+                responsible global citizen.
+              </motion.p>
+              <motion.ul variants={container} className="space-y-5 mb-12">
                 {[
                   'Nurturing environment for all-round development',
-                  'State-of-the-art infrastructure & labs',
-                  'Focus on moral values and cultural heritage'
-                ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-foreground/80 font-medium">
-                    <span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />
-                    {item}
-                  </li>
+                  'State-of-the-art infrastructure & science labs',
+                  'Deep focus on moral values and cultural heritage',
+                ].map((text, i) => (
+                  <motion.li
+                    key={i}
+                    variants={item}
+                    className="flex items-start gap-4 text-gray-700 font-semibold text-lg"
+                  >
+                    <CheckCircle2 className="w-6 h-6 text-[#F97316] shrink-0 mt-0.5" />
+                    {text}
+                  </motion.li>
                 ))}
-              </ul>
-              <Link href="/about" className="inline-flex items-center gap-2 text-primary font-bold hover:text-secondary transition-colors group">
-                Read Principal's Message 
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              </motion.ul>
+              <motion.div variants={item}>
+                <Link
+                  href="/about"
+                  className="group inline-flex items-center gap-3 text-[#0F2044] font-bold hover:text-[#F97316] transition-colors text-xl"
+                >
+                  Read Principal's Message
+                  <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+                </Link>
+              </motion.div>
             </motion.div>
-            
-            <motion.div 
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="relative"
-            >
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
-                <img src={imgLibrary} alt="Students studying in library" className="w-full h-full object-cover" />
-              </div>
-              <div className="absolute -bottom-8 -left-8 w-48 h-48 rounded-2xl overflow-hidden border-8 border-background shadow-xl hidden md:block">
-                <img src={imgDance} alt="Cultural activities" className="w-full h-full object-cover" />
-              </div>
-            </motion.div>
+
+            {/* Image collage */}
+            <div className="relative h-[640px] hidden lg:block">
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="absolute top-0 right-0 w-[80%] h-[68%] rounded-3xl overflow-hidden shadow-2xl"
+              >
+                <img
+                  src={imgLibrary}
+                  alt="Library"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                />
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: -40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="absolute bottom-0 left-0 w-[62%] h-[58%] rounded-3xl overflow-hidden shadow-2xl border-8 border-[#FAFAF7]"
+              >
+                <img
+                  src={imgDance}
+                  alt="Cultural activities"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                />
+              </motion.div>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-[#F97316] rounded-full mix-blend-multiply filter blur-3xl opacity-25 animate-pulse" />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Facilities Quick View */}
-      <section className="py-24 bg-primary text-primary-foreground relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }} />
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-5xl font-serif font-bold mb-4">Modern Facilities</h2>
-            <p className="text-primary-foreground/80 text-lg">Everything your child needs to succeed in the 21st century, housed within a safe, inspiring campus.</p>
+      {/* ── 4. FACILITIES BENTO ───────────────────────────── */}
+      <section className="py-32 md:py-44 bg-white relative overflow-hidden">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-20">
+            <div className="flex items-center justify-center gap-3 mb-5">
+              <div className="h-px w-10 bg-[#F97316]" />
+              <span className="text-[#F97316] font-bold uppercase tracking-[0.2em] text-sm">
+                Infrastructure
+              </span>
+              <div className="h-px w-10 bg-[#F97316]" />
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#0F2044] mb-6 leading-[1.05]">
+              World-Class Facilities
+            </h2>
+            <p className="text-lg md:text-xl text-gray-500 font-medium">
+              An ecosystem built to inspire creativity, support critical
+              thinking, and build excellence.
+            </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 auto-rows-[220px]">
+            {/* Large Smart Classroom card */}
+            <motion.div
+              whileHover={{ y: -6, boxShadow: '0 24px 60px rgba(249,115,22,0.2)' }}
+              transition={{ type: 'spring', stiffness: 300 }}
+              className="md:col-span-2 row-span-2 bg-[#FAFAF7] rounded-3xl p-10 border border-gray-100 group relative overflow-hidden cursor-pointer"
+            >
+              <div className="absolute top-0 right-0 w-72 h-72 bg-[#F97316]/10 rounded-full blur-3xl -translate-y-1/3 translate-x-1/3 group-hover:bg-[#F97316]/20 transition-colors duration-500" />
+              <div className="relative z-10 h-full flex flex-col justify-between">
+                <div className="w-18 h-18 w-[72px] h-[72px] rounded-2xl bg-[#F97316] text-white flex items-center justify-center mb-6">
+                  <MonitorPlay className="w-9 h-9" />
+                </div>
+                <div>
+                  <h3 className="text-2xl md:text-3xl font-bold text-[#0F2044] mb-4 group-hover:text-[#F97316] transition-colors">
+                    Smart Classrooms
+                  </h3>
+                  <p className="text-gray-500 font-medium text-lg leading-relaxed">
+                    Fully equipped digital classrooms that make learning
+                    interactive, visual, and highly engaging for modern students.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Library */}
+            <motion.div
+              whileHover={{ y: -6 }}
+              transition={{ type: 'spring', stiffness: 300 }}
+              className="bg-[#0F2044] rounded-3xl p-8 group overflow-hidden relative cursor-pointer"
+            >
+              <BookOpen className="w-9 h-9 text-[#F97316] mb-5" />
+              <h3 className="text-xl font-bold text-white mb-2">Rich Library</h3>
+              <p className="text-white/60 text-sm font-medium leading-relaxed">
+                Vast collection of academic texts and literature.
+              </p>
+            </motion.div>
+
+            {/* Campus photo card */}
+            <motion.div
+              whileHover={{ y: -6 }}
+              transition={{ type: 'spring', stiffness: 300 }}
+              className="row-span-2 rounded-3xl overflow-hidden relative group cursor-pointer"
+            >
+              <img
+                src={imgAdd2}
+                alt="Campus"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0F2044]/90 via-[#0F2044]/20 to-transparent" />
+              <div className="absolute bottom-7 left-6 right-6">
+                <h3 className="text-xl font-bold text-white mb-1">
+                  Spacious Campus
+                </h3>
+                <p className="text-white/65 text-sm font-medium">
+                  Safe and inspiring.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* A.C. Playway */}
+            <motion.div
+              whileHover={{ y: -6 }}
+              transition={{ type: 'spring', stiffness: 300 }}
+              className="bg-[#FAFAF7] rounded-3xl p-8 border border-gray-100 group cursor-pointer"
+            >
+              <Users className="w-9 h-9 text-[#0F2044] mb-5 group-hover:text-[#F97316] transition-colors" />
+              <h3 className="text-xl font-bold text-[#0F2044] mb-2">
+                A.C. Playway
+              </h3>
+              <p className="text-gray-500 text-sm font-medium leading-relaxed">
+                Climate-controlled comfort for early learners.
+              </p>
+            </motion.div>
+
+            {/* Science Labs wide card */}
+            <motion.div
+              whileHover={{ y: -6 }}
+              transition={{ type: 'spring', stiffness: 300 }}
+              className="md:col-span-3 lg:col-span-2 bg-[#FAFAF7] rounded-3xl p-8 border border-gray-100 group flex items-center gap-8 cursor-pointer"
+            >
+              <div className="w-[72px] h-[72px] rounded-2xl bg-[#F97316]/10 text-[#F97316] flex items-center justify-center shrink-0 group-hover:bg-[#F97316] group-hover:text-white transition-colors duration-300">
+                <Trophy className="w-9 h-9" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-[#0F2044] mb-3 group-hover:text-[#F97316] transition-colors">
+                  Advanced Science Labs
+                </h3>
+                <p className="text-gray-500 font-medium text-lg leading-relaxed">
+                  Dedicated labs for Physics, Chemistry, and Biology — enabling
+                  hands-on practical excellence.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+
+          <div className="text-center mt-14">
+            <Link
+              href="/facilities"
+              className="inline-flex items-center gap-3 text-[#0F2044] font-bold hover:text-[#F97316] transition-colors group text-xl"
+            >
+              Explore All Facilities
+              <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 5. ACHIEVEMENT BANNER ────────────────────────── */}
+      <section
+        className="py-32 relative overflow-hidden"
+        style={{
+          background: 'linear-gradient(135deg, #F97316 0%, #FBBF24 50%, #F97316 100%)',
+        }}
+      >
+        {/* Noise texture */}
+        <div className="absolute inset-0 opacity-20 [background-image:url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22 opacity=%220.4%22/%3E%3C/svg%3E')] mix-blend-overlay" />
+
+        <div className="container mx-auto px-6 lg:px-8 relative z-10">
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center text-white/80 font-bold uppercase tracking-[0.25em] text-sm mb-16"
+          >
+            Our Achievements in Numbers
+          </motion.p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0 divide-y md:divide-y-0 md:divide-x divide-white/25 text-center">
             {[
-              { title: 'Smart Class Rooms', desc: 'Interactive digital learning' },
-              { title: 'Science Labs', desc: 'Physics, Chemistry, Biology' },
-              { title: 'Computer Labs', desc: 'Modern IT infrastructure' },
-              { title: 'A.C. Playway', desc: 'Comfortable early education' }
-            ].map((facility, i) => (
-              <motion.div 
+              { value: 92.5, suffix: '%', label: 'Top Board Score', sub: 'CBSE 2023-24' },
+              { value: 30, suffix: '+', label: 'Expert Faculty', sub: 'Experienced Educators' },
+              { value: 11, suffix: '', label: 'Modern Facilities', sub: 'World-Class Infrastructure' },
+            ].map((stat, i) => (
+              <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, scale: 0.88 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-colors"
+                transition={{ delay: i * 0.15, duration: 0.6 }}
+                className="py-10 md:py-6 px-8"
               >
-                <h3 className="font-bold text-xl text-secondary mb-2">{facility.title}</h3>
-                <p className="text-sm text-primary-foreground/70">{facility.desc}</p>
+                <h3 className="text-7xl md:text-8xl lg:text-9xl font-extrabold text-white leading-none mb-4 tracking-tighter drop-shadow-lg">
+                  <Counter to={stat.value} suffix={stat.suffix} />
+                </h3>
+                <p className="text-white font-bold uppercase tracking-[0.15em] text-base mb-1">
+                  {stat.label}
+                </p>
+                <p className="text-white/65 font-medium text-sm">{stat.sub}</p>
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="text-center mt-12">
-            <Link href="/facilities" className="inline-flex items-center justify-center px-8 py-3 bg-transparent border border-white/30 text-white font-medium rounded hover:bg-white hover:text-primary transition-all">
-              View All Facilities
+      {/* ── 6. GALLERY PREVIEW ───────────────────────────── */}
+      <section className="py-32 md:py-44 bg-[#FAFAF7]">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+            <div>
+              <div className="flex items-center gap-3 mb-5">
+                <div className="h-px w-10 bg-[#F97316]" />
+                <span className="text-[#F97316] font-bold uppercase tracking-[0.2em] text-sm">
+                  Gallery
+                </span>
+              </div>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#0F2044] leading-[1.05]">
+                Life at Yogeshwar
+              </h2>
+              <p className="text-lg md:text-xl text-gray-500 font-medium mt-4">
+                Moments of discovery, joy, and achievement.
+              </p>
+            </div>
+            <Link
+              href="/gallery"
+              className="inline-flex items-center gap-2 px-8 py-4 border-2 border-[#0F2044] text-[#0F2044] font-bold rounded-full hover:bg-[#0F2044] hover:text-white transition-all text-lg shrink-0"
+            >
+              View Full Gallery
             </Link>
           </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[300px]">
+            {[
+              { src: imgBuilding, span: 'col-span-2 row-span-2', label: 'Our Campus' },
+              { src: imgLibrary, span: 'col-span-1', label: 'Library' },
+              { src: imgMusicRoom, span: 'col-span-1', label: 'Music Room' },
+            ].map((img, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.12, duration: 0.5 }}
+                className={`relative rounded-3xl overflow-hidden group cursor-pointer ${img.span}`}
+              >
+                <img
+                  src={img.src}
+                  alt={img.label}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-[#0F2044]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <span className="text-white font-bold text-xl md:text-2xl translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    {img.label}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 7. CTA BANNER ────────────────────────────────── */}
+      <section className="py-36 bg-[#0F2044] relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-[#F97316]/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#F97316]/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/3 pointer-events-none" />
+
+        <div className="container mx-auto px-6 lg:px-8 relative z-10 text-center max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="flex items-center justify-center gap-3 mb-8"
+          >
+            <GraduationCap className="w-6 h-6 text-[#F97316]" />
+            <span className="text-[#F97316] font-bold uppercase tracking-[0.2em] text-sm">
+              Admissions 2024-25
+            </span>
+          </motion.div>
+          <motion.h2
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-[1.1]"
+          >
+            Secure Your Child's{' '}
+            <span
+              style={{
+                background: 'linear-gradient(90deg,#F97316,#FBBF24)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              Future Today.
+            </span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-xl md:text-2xl text-white/70 mb-12 font-medium leading-relaxed"
+          >
+            Give your child the foundation they need to succeed. Join the
+            Yogeshwar family and unlock a world of possibilities.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="flex flex-col sm:flex-row gap-5 justify-center"
+          >
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center px-10 py-5 bg-[#F97316] text-white text-lg font-bold rounded-full shadow-xl hover:bg-white hover:text-[#0F2044] transition-colors"
+            >
+              Enquire Now
+            </Link>
+            <Link
+              href="/about"
+              className="inline-flex items-center justify-center px-10 py-5 bg-transparent border-2 border-white/30 text-white text-lg font-bold rounded-full hover:bg-white/10 transition-colors"
+            >
+              Learn About Us
+            </Link>
+          </motion.div>
         </div>
       </section>
     </Layout>

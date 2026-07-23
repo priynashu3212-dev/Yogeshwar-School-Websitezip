@@ -1,7 +1,8 @@
 import React from 'react';
 import Layout from '@/components/layout/Layout';
 import { motion } from 'framer-motion';
-import { Trophy, Star, Medal } from 'lucide-react';
+import { Trophy, Star, Medal, ChevronRight } from 'lucide-react';
+import { Link } from 'wouter';
 
 import imgMerit from '@assets/image_1784784669429.png';
 
@@ -29,19 +30,51 @@ const class12Results = [
   { name: 'Gurpreet Singh', stream: 'Commerce', score: '80.6%' },
 ];
 
+const getStreamColor = (stream: string) => {
+  switch(stream) {
+    case 'Commerce': return 'bg-blue-100 text-blue-800 border-blue-200';
+    case 'Arts': return 'bg-purple-100 text-purple-800 border-purple-200';
+    case 'Medical': return 'bg-emerald-100 text-emerald-800 border-emerald-200';
+    default: return 'bg-gray-100 text-gray-800 border-gray-200';
+  }
+};
+
+const getRankBadge = (index: number) => {
+  if (index === 0) return 'bg-amber-400 text-white shadow-md border border-amber-300'; // Gold
+  if (index === 1) return 'bg-slate-300 text-slate-800 shadow-sm border border-slate-200'; // Silver
+  if (index === 2) return 'bg-amber-700/60 text-white shadow-sm border border-amber-800/20'; // Bronze
+  return 'bg-muted text-foreground/50';
+};
+
 export default function Results() {
   return (
     <Layout>
-      {/* Header */}
-      <section className="bg-primary text-primary-foreground py-20 relative overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center opacity-5">
-          <Trophy className="w-96 h-96" />
+      {/* 1. Page Hero */}
+      <section className="bg-primary pt-32 pb-24 relative overflow-hidden">
+        {/* Confetti/Stars pseudo elements using simple shapes */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-20 left-[10%] w-4 h-4 rotate-45 bg-secondary" />
+          <div className="absolute top-40 right-[20%] w-6 h-6 rounded-full border-4 border-amber-400" />
+          <div className="absolute bottom-20 left-[30%] w-5 h-5 bg-white rotate-12" />
+          <div className="absolute top-1/2 right-[10%] w-4 h-4 bg-secondary rotate-45" />
         </div>
+        
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20" />
+        <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
+          <Trophy className="w-[800px] h-[800px]" />
+        </div>
+        
         <div className="container mx-auto px-4 relative z-10 text-center">
+          <div className="inline-flex items-center gap-2 text-secondary font-bold uppercase tracking-widest text-xs mb-6">
+            <Link href="/" className="text-white/60 hover:text-white transition-colors">Home</Link>
+            <ChevronRight className="w-3 h-3 text-white/40" />
+            <span>Results</span>
+          </div>
+          <br/>
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-secondary text-white rounded-full text-sm font-bold tracking-widest uppercase mb-6 shadow-xl"
+            className="inline-flex items-center gap-2 px-6 py-2 bg-secondary text-white rounded-full text-sm font-bold tracking-widest uppercase mb-8 shadow-[0_0_30px_rgba(249,115,22,0.4)]"
           >
             <Star className="w-4 h-4 fill-white" />
             Session 2023-24
@@ -50,107 +83,155 @@ export default function Results() {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-6"
+            className="text-5xl md:text-7xl font-serif font-extrabold text-white mb-6 tracking-tight"
           >
             Academic Excellence
           </motion.h1>
-          <p className="text-lg text-primary-foreground/80 max-w-2xl mx-auto">
-            Celebrating the outstanding achievements of our students in the CBSE Board Examinations. We are incredibly proud of their hard work and dedication.
+          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-medium leading-relaxed">
+            Celebrating the outstanding achievements of our students in the CBSE Board Examinations. Their hard work has set a new benchmark.
           </p>
         </div>
       </section>
 
-      {/* Poster Section */}
-      <section className="py-16 bg-muted/30 border-b border-border">
+      {/* 2. Top Achievement Highlight */}
+      <section className="py-20 bg-muted/50 border-b border-border -mt-10 relative z-20">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-2xl border-8 border-white bg-white">
-            <img 
-              src={imgMerit} 
-              alt="Merit List 2023-24 Poster" 
-              className="w-full h-auto object-contain"
-            />
+          <div className="max-w-5xl mx-auto">
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-br from-amber-100 to-amber-50 rounded-[3rem] p-2 shadow-2xl border border-amber-200"
+            >
+              <div className="bg-white rounded-[2.5rem] p-8 md:p-12 flex flex-col md:flex-row items-center gap-12 border border-amber-100">
+                <div className="flex-1 text-center md:text-left">
+                  <div className="inline-flex items-center gap-2 text-amber-600 font-bold uppercase tracking-widest text-sm mb-4">
+                    <Trophy className="w-5 h-5" /> School Topper
+                  </div>
+                  <h2 className="text-4xl md:text-6xl font-serif font-black text-primary mb-4 leading-tight">
+                    Sahil Moga
+                  </h2>
+                  <div className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-700 tracking-tighter mb-6 drop-shadow-sm">
+                    92.5%
+                  </div>
+                  <p className="text-lg text-foreground/70 font-bold">Class 10th Board Examination</p>
+                </div>
+                <div className="flex-1 w-full max-w-sm">
+                  <div className="rounded-3xl overflow-hidden shadow-xl border-8 border-white rotate-2 hover:rotate-0 transition-transform duration-500">
+                    <img 
+                      src={imgMerit} 
+                      alt="Merit List 2023-24 Poster" 
+                      className="w-full h-auto object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Detailed Results */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 3 & 4. Detailed Results Grids */}
+      <section className="py-24 bg-background relative">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
           
-          <div className="grid lg:grid-cols-2 gap-16">
+          <div className="grid lg:grid-cols-2 gap-16 md:gap-24">
             
-            {/* 10th Class */}
+            {/* Class 10 */}
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <div className="flex items-center gap-4 mb-8 pb-4 border-b-2 border-secondary/30">
-                <div className="w-12 h-12 bg-primary text-primary-foreground rounded-lg flex items-center justify-center font-serif text-2xl font-bold">
+              <div className="flex items-center gap-6 mb-10 pb-6 border-b border-border">
+                <div className="w-16 h-16 bg-primary text-white rounded-2xl flex items-center justify-center font-serif text-3xl font-black shadow-lg">
                   10
                 </div>
                 <div>
-                  <h2 className="text-3xl font-serif font-bold text-primary">Class 10th</h2>
-                  <p className="text-secondary font-semibold">Merit List</p>
+                  <h2 className="text-4xl font-serif font-bold text-primary mb-1">Class 10th</h2>
+                  <p className="text-secondary font-bold uppercase tracking-widest text-sm">Merit List</p>
                 </div>
               </div>
 
               <div className="space-y-4">
                 {class10Results.map((student, i) => (
-                  <div key={i} className="flex items-center justify-between p-4 bg-card border border-border rounded-xl hover:shadow-md transition-shadow">
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-primary font-bold">
+                  <motion.div 
+                    whileHover={{ scale: 1.02 }}
+                    key={i} 
+                    className="flex items-center justify-between p-5 bg-card border border-border rounded-2xl shadow-sm hover:shadow-md transition-all group"
+                  >
+                    <div className="flex items-center gap-5">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold font-serif text-lg ${getRankBadge(i)}`}>
                         {i + 1}
                       </div>
-                      <span className="font-bold text-lg text-foreground">{student.name}</span>
+                      <span className="font-bold text-xl text-primary">{student.name}</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Medal className="w-5 h-5 text-secondary" />
-                      <span className="font-bold text-xl text-primary font-mono">{student.score}</span>
+                    <div className="flex items-center gap-3">
+                      {i === 0 && <Medal className="w-6 h-6 text-amber-500" />}
+                      <span className={`font-black text-2xl tracking-tight ${i === 0 ? 'text-amber-600' : 'text-primary'}`}>
+                        {student.score}
+                      </span>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
 
-            {/* 12th Class */}
+            {/* Class 12 */}
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
+              initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <div className="flex items-center gap-4 mb-8 pb-4 border-b-2 border-secondary/30">
-                <div className="w-12 h-12 bg-primary text-primary-foreground rounded-lg flex items-center justify-center font-serif text-2xl font-bold">
+              <div className="flex items-center gap-6 mb-10 pb-6 border-b border-border">
+                <div className="w-16 h-16 bg-primary text-white rounded-2xl flex items-center justify-center font-serif text-3xl font-black shadow-lg">
                   12
                 </div>
                 <div>
-                  <h2 className="text-3xl font-serif font-bold text-primary">Class 12th</h2>
-                  <p className="text-secondary font-semibold">Merit List</p>
+                  <h2 className="text-4xl font-serif font-bold text-primary mb-1">Class 12th</h2>
+                  <p className="text-secondary font-bold uppercase tracking-widest text-sm">Merit List</p>
                 </div>
               </div>
 
               <div className="space-y-4">
                 {class12Results.map((student, i) => (
-                  <div key={i} className="flex items-center justify-between p-4 bg-card border border-border rounded-xl hover:shadow-md transition-shadow">
-                    <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-primary font-bold">
+                  <motion.div 
+                    whileHover={{ scale: 1.02 }}
+                    key={i} 
+                    className="flex items-center justify-between p-5 bg-card border border-border rounded-2xl shadow-sm hover:shadow-md transition-all group"
+                  >
+                    <div className="flex items-center gap-5">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold font-serif text-lg ${getRankBadge(i)}`}>
                         {i + 1}
                       </div>
                       <div>
-                        <span className="block font-bold text-lg text-foreground leading-tight">{student.name}</span>
-                        <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{student.stream}</span>
+                        <span className="block font-bold text-xl text-primary leading-none mb-1.5">{student.name}</span>
+                        <span className={`inline-block px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border ${getStreamColor(student.stream)}`}>
+                          {student.stream}
+                        </span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      {student.score !== 'Merit' && <Medal className="w-5 h-5 text-secondary" />}
-                      <span className="font-bold text-xl text-primary font-mono">{student.score}</span>
+                    <div className="flex items-center gap-3">
+                      {student.score !== 'Merit' && i < 3 && <Medal className="w-5 h-5 text-amber-500" />}
+                      <span className={`font-black text-2xl tracking-tight ${i < 3 ? 'text-amber-600' : 'text-primary'}`}>
+                        {student.score}
+                      </span>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
 
           </div>
+        </div>
+      </section>
+
+      {/* 5. Motivational Closing Strip */}
+      <section className="py-16 bg-primary text-white text-center">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-serif font-bold italic opacity-90">
+            "Inspiring the next generation of achievers."
+          </h2>
         </div>
       </section>
     </Layout>
