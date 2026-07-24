@@ -9,6 +9,8 @@ import imgLibrary from '@assets/image_1784784678674.png';
 import imgDance from '@assets/image_1784784658855.png';
 import imgAdd2 from '@assets/image_1784784713330.png';
 import imgMusicRoom from '@assets/image_1784784692373.png';
+import imgScienceLab from '@assets/image_1784870541945.png';
+import imgStaff from '@assets/image_1784870708131.png';
 
 /* ── Animated counter ────────────────────────────────── */
 const Counter = ({
@@ -51,6 +53,15 @@ const Counter = ({
   );
 };
 
+/* ── Hero slideshow images ───────────────────────────── */
+const heroSlides = [
+  { src: imgBuilding,    label: 'Our Campus' },
+  { src: imgScienceLab,  label: 'Science Lab' },
+  { src: imgDance,       label: 'Cultural Events' },
+  { src: imgStaff,       label: 'Our Team' },
+  { src: imgAdd2,        label: 'School Life' },
+];
+
 /* ── Stagger variants ────────────────────────────────── */
 const container = {
   hidden: { opacity: 0 },
@@ -63,19 +74,52 @@ const item = {
 
 /* ══════════════════════════════════════════════════════ */
 export default function Home() {
+  const [slideIndex, setSlideIndex] = React.useState(0);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setSlideIndex((prev) => (prev + 1) % heroSlides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <Layout>
       {/* ── 1. HERO ──────────────────────────────────────── */}
       <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-[#0F2044] pt-20">
-        {/* Background image */}
+        {/* Background slideshow */}
         <div className="absolute inset-0 z-0">
-          <img
-            src={imgBuilding}
-            alt="Yogeshwar School Campus"
-            className="w-full h-full object-cover object-center scale-105"
-          />
-          <div className="absolute inset-0 bg-[#0F2044]/78" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0F2044] via-[#0F2044]/55 to-transparent" />
+          {heroSlides.map((slide, i) => (
+            <motion.div
+              key={i}
+              className="absolute inset-0"
+              animate={{ opacity: i === slideIndex ? 1 : 0 }}
+              transition={{ duration: 1.4, ease: 'easeInOut' }}
+            >
+              <img
+                src={slide.src}
+                alt={slide.label}
+                className="w-full h-full object-cover object-center scale-105"
+              />
+            </motion.div>
+          ))}
+          <div className="absolute inset-0 bg-[#0F2044]/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0F2044]/90 via-[#0F2044]/20 to-transparent" />
+        </div>
+
+        {/* Slide dots */}
+        <div className="absolute bottom-24 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+          {heroSlides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setSlideIndex(i)}
+              className={`transition-all duration-300 rounded-full ${
+                i === slideIndex
+                  ? 'w-8 h-2.5 bg-[#F97316]'
+                  : 'w-2.5 h-2.5 bg-white/40 hover:bg-white/70'
+              }`}
+            />
+          ))}
         </div>
 
         {/* Noise overlay */}
