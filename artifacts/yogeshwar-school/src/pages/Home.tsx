@@ -147,10 +147,9 @@ export default function Home() {
 
             <motion.h1
               variants={item}
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[96px] font-bold text-white leading-[1.05] mb-8 tracking-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] mb-5 tracking-tight"
             >
               Empowering Minds,{' '}
-              <br className="hidden md:block" />
               <span
                 className="italic"
                 style={{
@@ -165,7 +164,7 @@ export default function Home() {
 
             <motion.p
               variants={item}
-              className="text-lg md:text-2xl text-white/80 mb-12 max-w-2xl mx-auto font-medium leading-relaxed"
+              className="text-base md:text-lg text-white/80 mb-8 max-w-xl mx-auto font-medium leading-relaxed"
             >
               Yogeshwar Sr. Sec. School, Siwan — where Indian values meet
               world-class modern education.
@@ -173,17 +172,17 @@ export default function Home() {
 
             <motion.div
               variants={item}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
+              className="flex flex-col sm:flex-row gap-3 justify-center"
             >
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center px-10 py-5 bg-[#F97316] text-white text-lg font-bold rounded-full shadow-[0_0_50px_-10px_rgba(249,115,22,0.7)] hover:shadow-[0_0_70px_-10px_rgba(249,115,22,0.9)] hover:scale-105 transition-all duration-300"
+                className="inline-flex items-center justify-center px-7 py-3.5 bg-[#F97316] text-white font-bold rounded-full shadow-[0_0_40px_-10px_rgba(249,115,22,0.7)] hover:shadow-[0_0_60px_-10px_rgba(249,115,22,0.9)] hover:scale-105 transition-all duration-300"
               >
                 Enquire Now
               </Link>
               <Link
                 href="/about"
-                className="inline-flex items-center justify-center px-10 py-5 bg-white/10 backdrop-blur-md border border-white/25 text-white text-lg font-bold rounded-full hover:bg-white/20 transition-all duration-300"
+                className="inline-flex items-center justify-center px-7 py-3.5 bg-white/10 backdrop-blur-md border border-white/25 text-white font-bold rounded-full hover:bg-white/20 transition-all duration-300"
               >
                 Discover Our Story
               </Link>
