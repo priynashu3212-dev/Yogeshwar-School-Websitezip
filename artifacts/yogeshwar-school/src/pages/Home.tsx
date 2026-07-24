@@ -11,6 +11,7 @@ import imgAdd2 from '@assets/image_1784784713330.png';
 import imgMusicRoom from '@assets/image_1784784692373.png';
 import imgScienceLab from '@assets/image_1784870541945.png';
 import imgStaff from '@assets/image_1784870708131.png';
+import imgSchoolFront from '@assets/yss_1784870965611.jpg';
 
 /* ── Animated counter ────────────────────────────────── */
 const Counter = ({
@@ -55,6 +56,7 @@ const Counter = ({
 
 /* ── Hero slideshow images ───────────────────────────── */
 const heroSlides = [
+  { src: imgSchoolFront, label: 'Yogeshwar School' },
   { src: imgBuilding,    label: 'Our Campus' },
   { src: imgScienceLab,  label: 'Science Lab' },
   { src: imgDance,       label: 'Cultural Events' },
