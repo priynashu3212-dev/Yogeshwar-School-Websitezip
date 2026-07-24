@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Menu, X, Phone, Mail, GraduationCap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import imgLogo from '@assets/image_1784871486450.png';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -51,13 +52,20 @@ export default function Navbar() {
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
-            <Link href="/" className="flex flex-col group">
-              <span className="font-serif font-extrabold text-2xl md:text-3xl text-white tracking-tight group-hover:text-white/90 transition-colors">
-                YOGESHWAR
-              </span>
-              <span className="font-sans text-[9px] md:text-[10px] font-bold tracking-[0.2em] uppercase text-secondary">
-                Sr. Sec. School, Siwan
-              </span>
+            <Link href="/" className="flex items-center gap-3 group">
+              <img
+                src={imgLogo}
+                alt="Yogeshwar School Logo"
+                className="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover ring-2 ring-secondary/50 group-hover:ring-secondary transition-all duration-300 shadow-lg"
+              />
+              <div className="flex flex-col">
+                <span className="font-serif font-extrabold text-xl md:text-2xl text-white tracking-tight group-hover:text-white/90 transition-colors leading-tight">
+                  YOGESHWAR
+                </span>
+                <span className="font-sans text-[9px] md:text-[10px] font-bold tracking-[0.2em] uppercase text-secondary leading-tight">
+                  Sr. Sec. School, Siwan
+                </span>
+              </div>
             </Link>
 
             {/* Desktop Nav */}

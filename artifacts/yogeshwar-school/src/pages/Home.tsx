@@ -9,7 +9,6 @@ import imgLibrary from '@assets/image_1784784678674.png';
 import imgDance from '@assets/image_1784784658855.png';
 import imgAdd2 from '@assets/image_1784784713330.png';
 import imgMusicRoom from '@assets/image_1784784692373.png';
-import imgScienceLab from '@assets/image_1784870541945.png';
 import imgStaff from '@assets/image_1784870708131.png';
 import imgSchoolFront from '@assets/yss_1784870965611.jpg';
 import imgPhysicsLab from '@assets/image_1784871279419.png';
@@ -60,15 +59,14 @@ const Counter = ({
 
 /* ── Hero slideshow images ───────────────────────────── */
 const heroSlides = [
-  { src: imgSchoolFront,      label: 'Yogeshwar School'  },
-  { src: imgBuilding,         label: 'Our Campus'        },
-  { src: imgPhysicsLab,       label: 'Physics Lab'       },
-  { src: imgChemLab,          label: 'Chemistry Lab'     },
-  { src: imgBioLab,           label: 'Biology Lab'       },
-  { src: imgLibraryStudents,  label: 'Library'           },
-  { src: imgDance,            label: 'Cultural Events'   },
-  { src: imgStaff,            label: 'Our Team'          },
-  { src: imgAdd2,             label: 'School Life'       },
+  { src: imgSchoolFront,     label: 'Yogeshwar School' },
+  { src: imgBuilding,        label: 'Our Campus'       },
+  { src: imgPhysicsLab,      label: 'Physics Lab'      },
+  { src: imgChemLab,         label: 'Chemistry Lab'    },
+  { src: imgBioLab,          label: 'Biology Lab'      },
+  { src: imgLibraryStudents, label: 'Library'          },
+  { src: imgStaff,           label: 'Our Team'         },
+  { src: imgAdd2,            label: 'School Life'      },
 ];
 
 /* ── Stagger variants ────────────────────────────────── */
