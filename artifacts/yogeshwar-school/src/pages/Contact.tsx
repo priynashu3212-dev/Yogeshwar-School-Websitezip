@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from '@/components/layout/Layout';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Send, ChevronRight, Clock } from 'lucide-react';
+import imgMap from '@assets/image_1784871140845.png';
 import { Link } from 'wouter';
 
 export default function Contact() {
@@ -221,22 +222,25 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* 3. Map Placeholder */}
+      {/* 3. Map */}
       <section className="pb-24 pt-12 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <div className="h-[400px] bg-primary rounded-3xl overflow-hidden relative group flex items-center justify-center border-8 border-white shadow-xl">
-            {/* Grid pattern */}
-            <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'linear-gradient(white 2px, transparent 2px), linear-gradient(90deg, white 2px, transparent 2px)', backgroundSize: '40px 40px' }} />
-            
-            <div className="relative z-10 text-center flex flex-col items-center">
-              <div className="w-16 h-16 bg-secondary text-white rounded-full flex items-center justify-center mb-4 shadow-[0_0_40px_rgba(249,115,22,0.6)] animate-bounce">
-                <MapPin className="w-8 h-8" />
+          <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white relative group">
+            <img
+              src={imgMap}
+              alt="Yogeshwar Sr. Sec. School Location Map"
+              className="w-full h-[420px] object-cover object-center group-hover:scale-105 transition-transform duration-700"
+            />
+            {/* Pin label overlay */}
+            <div className="absolute bottom-6 left-6 flex items-center gap-3 bg-white rounded-2xl shadow-xl px-5 py-3 border border-gray-100">
+              <div className="w-10 h-10 bg-[#F97316] rounded-full flex items-center justify-center shrink-0 shadow-md">
+                <MapPin className="w-5 h-5 text-white" />
               </div>
-              <h3 className="text-2xl font-serif font-bold text-white mb-2">Yogeshwar Sr. Sec. School</h3>
-              <p className="text-white/70 font-medium">Siwan, Kaithal</p>
+              <div>
+                <p className="font-bold text-[#0F2044] text-sm leading-none mb-0.5">Yogeshwar Sr. Sec. School</p>
+                <p className="text-gray-400 text-xs font-medium">Siwan, Kaithal, Haryana</p>
+              </div>
             </div>
-            
-            <div className="absolute inset-0 bg-secondary/0 group-hover:bg-secondary/5 transition-colors duration-500 cursor-pointer" />
           </div>
         </div>
       </section>
