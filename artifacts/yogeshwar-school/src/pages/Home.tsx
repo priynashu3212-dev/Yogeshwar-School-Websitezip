@@ -66,7 +66,6 @@ const heroSlides = [
   { src: imgBioLab,          label: 'Biology Lab'      },
   { src: imgLibraryStudents, label: 'Library'          },
   { src: imgStaff,           label: 'Our Team'         },
-  { src: imgAdd2,            label: 'School Life'      },
 ];
 
 /* ── Stagger variants ────────────────────────────────── */
