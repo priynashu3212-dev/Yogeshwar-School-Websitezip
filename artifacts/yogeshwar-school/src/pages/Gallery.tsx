@@ -14,21 +14,29 @@ import imgAdd2 from '@assets/image_1784784713330.png';
 import imgAdd3 from '@assets/image_1784784741738.png';
 import imgAdd4 from '@assets/image_1784784761550.png';
 import imgAdd5 from '@assets/Screenshot_(1)_1784784855115.png';
+import imgPhysicsLab from '@assets/image_1784871279419.png';
+import imgChemLab from '@assets/image_1784871296800.png';
+import imgBioLab from '@assets/image_1784871308616.png';
+import imgLibraryReal from '@assets/image_1784871323347.png';
 
 const galleryImages = [
-  { id: 1, src: imgBuilding, alt: 'School Building Exterior', category: 'Campus' },
-  { id: 2, src: imgDance, alt: 'Students doing cultural dance performance', category: 'Events' },
-  { id: 3, src: imgLibrary, alt: 'Library with students studying', category: 'Academics' },
-  { id: 4, src: imgMusicRoom, alt: 'Dance and music room', category: 'Events' },
-  { id: 5, src: imgAdd1, alt: 'School Event Activity', category: 'Events' },
-  { id: 6, src: imgAdd2, alt: 'Campus View', category: 'Campus' },
-  { id: 7, src: imgAdd3, alt: 'Student Assembly', category: 'Campus' },
-  { id: 8, src: imgAdd4, alt: 'Classroom Environment', category: 'Academics' },
-  { id: 9, src: imgAdd5, alt: 'School Details', category: 'Campus' },
-  { id: 10, src: imgMerit, alt: 'Merit List Poster', category: 'Academics' },
+  { id: 1,  src: imgBuilding,    alt: 'School Building Exterior',             category: 'Campus'    },
+  { id: 2,  src: imgDance,       alt: 'Students cultural dance performance',  category: 'Events'    },
+  { id: 3,  src: imgPhysicsLab,  alt: 'Physics Lab — practical session',      category: 'Labs'      },
+  { id: 4,  src: imgChemLab,     alt: 'Chemistry Lab — experiment in progress', category: 'Labs'   },
+  { id: 5,  src: imgBioLab,      alt: 'Biology Lab — anatomical models',      category: 'Labs'      },
+  { id: 6,  src: imgLibraryReal, alt: 'Library — students reading',           category: 'Academics' },
+  { id: 7,  src: imgLibrary,     alt: 'Library interior',                     category: 'Academics' },
+  { id: 8,  src: imgMusicRoom,   alt: 'Dance and music room',                 category: 'Events'    },
+  { id: 9,  src: imgAdd1,        alt: 'School Event Activity',                category: 'Events'    },
+  { id: 10, src: imgAdd2,        alt: 'Campus View',                          category: 'Campus'    },
+  { id: 11, src: imgAdd3,        alt: 'Student Assembly',                     category: 'Campus'    },
+  { id: 12, src: imgAdd4,        alt: 'Classroom Environment',                category: 'Academics' },
+  { id: 13, src: imgAdd5,        alt: 'School Details',                       category: 'Campus'    },
+  { id: 14, src: imgMerit,       alt: 'Merit List Poster',                    category: 'Academics' },
 ];
 
-const categories = ['All', 'Campus', 'Events', 'Academics'];
+const categories = ['All', 'Campus', 'Labs', 'Events', 'Academics'];
 
 export default function Gallery() {
   const [activeCategory, setActiveCategory] = useState('All');
