@@ -1,8 +1,8 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import { useLocation } from 'wouter';
 
-const variants = {
+const variants: Variants = {
   initial: { opacity: 0, y: 18, scale: 0.99 },
   enter:   { opacity: 1, y: 0,  scale: 1,    transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } },
   exit:    { opacity: 0, y: -12, scale: 0.99, transition: { duration: 0.25, ease: 'easeIn' } },

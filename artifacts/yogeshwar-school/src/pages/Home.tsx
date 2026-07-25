@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '@/components/layout/Layout';
-import { motion, animate, useInView } from 'framer-motion';
+import { motion, animate, useInView, type Variants } from 'framer-motion';
 import { ArrowRight, ArrowDown, BookOpen, Users, Trophy, MonitorPlay, CheckCircle2, GraduationCap, Award } from 'lucide-react';
 import { Link } from 'wouter';
 
@@ -69,11 +69,11 @@ const heroSlides = [
 ];
 
 /* ── Stagger variants ────────────────────────────────── */
-const container = {
+const container: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.12 } },
 };
-const item = {
+const item: Variants = {
   hidden: { opacity: 0, y: 28 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: 'easeOut' } },
 };

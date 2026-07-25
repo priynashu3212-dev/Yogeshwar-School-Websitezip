@@ -1,10 +1,12 @@
-# [Project name]
+# Yogeshwar Sr. Sec. School
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+Marketing website for Yogeshwar Sr. Sec. School, Siwan.
 
 ## Run & Operate
 
 - `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/yogeshwar-school run dev` — run the school website
+- `pnpm --filter @workspace/mockup-sandbox run dev` — run the component preview sandbox
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
@@ -22,7 +24,10 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/yogeshwar-school/src/` — school website pages, layout components, and theme styles
+- `artifacts/yogeshwar-school/vite.config.ts` — Vite configuration and required `PORT`/`BASE_PATH` values
+- `artifacts/api-server/` — API server package
+- `attached_assets/` — school photography and other imported media
 
 ## Architecture decisions
 

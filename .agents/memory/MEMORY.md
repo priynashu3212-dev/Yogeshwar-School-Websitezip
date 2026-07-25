@@ -1,0 +1,1 @@
+- [Imported workspace dependencies](imported-workspace-dependencies.md) — zip-imported pnpm workspaces may need a frozen-lockfile install before any artifact workflow can start.
