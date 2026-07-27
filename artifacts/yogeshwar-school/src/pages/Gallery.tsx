@@ -18,6 +18,7 @@ import imgPhysicsLab from '@assets/image_1784871279419.png';
 import imgChemLab from '@assets/image_1784871296800.png';
 import imgBioLab from '@assets/image_1784871308616.png';
 import imgLibraryReal from '@assets/image_1784871323347.png';
+import imgHiringAnnouncement from '@assets/746369724_18074041580701721_1847276055017442437_n_1785133580159.jpg';
 
 const galleryImages = [
   { id: 1,  src: imgBuilding,    alt: 'School Building Exterior',             category: 'Campus'    },
@@ -34,6 +35,7 @@ const galleryImages = [
   { id: 12, src: imgAdd4,        alt: 'Classroom Environment',                category: 'Academics' },
   { id: 13, src: imgAdd5,        alt: 'School Details',                       category: 'Campus'    },
   { id: 14, src: imgMerit,       alt: 'Merit List Poster',                    category: 'Academics' },
+  { id: 15, src: imgHiringAnnouncement, alt: 'School recruitment announcement', category: 'Academics' },
 ];
 
 const categories = ['All', 'Campus', 'Labs', 'Events', 'Academics'];

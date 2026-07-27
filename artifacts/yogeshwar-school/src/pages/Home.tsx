@@ -15,6 +15,7 @@ import imgPhysicsLab from '@assets/image_1784871279419.png';
 import imgChemLab from '@assets/image_1784871296800.png';
 import imgBioLab from '@assets/image_1784871308616.png';
 import imgLibraryStudents from '@assets/image_1784871323347.png';
+import imgHiringAnnouncement from '@assets/746369724_18074041580701721_1847276055017442437_n_1785133580159.jpg';
 
 /* ── Animated counter ────────────────────────────────── */
 const Counter = ({
@@ -66,6 +67,7 @@ const heroSlides = [
   { src: imgBioLab,          label: 'Biology Lab'      },
   { src: imgLibraryStudents, label: 'Library'          },
   { src: imgStaff,           label: 'Our Team'         },
+  { src: imgHiringAnnouncement, label: 'School Announcement' },
 ];
 
 /* ── Stagger variants ────────────────────────────────── */
