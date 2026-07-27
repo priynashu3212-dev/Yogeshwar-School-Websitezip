@@ -114,7 +114,7 @@ export default function Home() {
         </div>
 
         {/* Slide dots */}
-        <div className="absolute bottom-24 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+        <div className="absolute bottom-8 sm:bottom-24 left-1/2 -translate-x-1/2 flex gap-2 z-20">
           {heroSlides.map((_, i) => (
             <button
               key={i}
@@ -195,7 +195,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 animate-bounce"
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 animate-bounce hidden sm:block"
         >
           <ArrowDown className="w-7 h-7" />
         </motion.div>
