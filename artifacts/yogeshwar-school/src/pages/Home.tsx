@@ -569,8 +569,8 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[300px]">
             {[
               { src: imgBuilding, span: 'col-span-2 row-span-2', label: 'Our Campus' },
-              { src: imgLibrary, span: 'col-span-1', label: 'Library' },
-              { src: imgMusicRoom, span: 'col-span-1', label: 'Music Room' },
+              { src: imgPhysicsLab, span: 'col-span-1', label: 'Physics Lab' },
+              { src: imgBioLab, span: 'col-span-1', label: 'Biology Lab' },
             ].map((img, i) => (
               <motion.div
                 key={i}
