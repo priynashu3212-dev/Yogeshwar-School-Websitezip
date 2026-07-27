@@ -47,7 +47,7 @@ export default function Navbar() {
         className={`fixed top-[32px] md:top-[34px] w-full z-40 transition-all duration-300 ${
           isScrolled 
             ? 'bg-primary shadow-xl border-b border-primary/20 py-2' 
-            : 'bg-primary/40 backdrop-blur-md border-b border-white/10 py-4'
+            : 'bg-primary border-b border-white/10 py-4'
         }`}
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
