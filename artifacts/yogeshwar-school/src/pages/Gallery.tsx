@@ -19,23 +19,25 @@ import imgChemLab from '@assets/image_1784871296800.png';
 import imgBioLab from '@assets/image_1784871308616.png';
 import imgLibraryReal from '@assets/image_1784871323347.png';
 import imgHiringAnnouncement from '@assets/746369724_18074041580701721_1847276055017442437_n_1785133580159.jpg';
+import imgSchoolBuilding from '@assets/image_1785389592438.png';
 
 const galleryImages = [
-  { id: 1,  src: imgBuilding,    alt: 'School Building Exterior',             category: 'Campus'    },
-  { id: 2,  src: imgDance,       alt: 'Students cultural dance performance',  category: 'Events'    },
-  { id: 3,  src: imgPhysicsLab,  alt: 'Physics Lab — practical session',      category: 'Labs'      },
-  { id: 4,  src: imgChemLab,     alt: 'Chemistry Lab — experiment in progress', category: 'Labs'   },
-  { id: 5,  src: imgBioLab,      alt: 'Biology Lab — anatomical models',      category: 'Labs'      },
-  { id: 6,  src: imgLibraryReal, alt: 'Library — students reading',           category: 'Academics' },
-  { id: 7,  src: imgLibrary,     alt: 'Library interior',                     category: 'Academics' },
-  { id: 8,  src: imgMusicRoom,   alt: 'Dance and music room',                 category: 'Events'    },
-  { id: 9,  src: imgAdd1,        alt: 'School Event Activity',                category: 'Events'    },
-  { id: 10, src: imgAdd2,        alt: 'Campus View',                          category: 'Campus'    },
-  { id: 11, src: imgAdd3,        alt: 'Student Assembly',                     category: 'Campus'    },
-  { id: 12, src: imgAdd4,        alt: 'Classroom Environment',                category: 'Academics' },
-  { id: 13, src: imgAdd5,        alt: 'School Details',                       category: 'Campus'    },
-  { id: 14, src: imgMerit,       alt: 'Merit List Poster',                    category: 'Academics' },
-  { id: 15, src: imgHiringAnnouncement, alt: 'School recruitment announcement', category: 'Academics' },
+  { id: 1,  src: imgSchoolBuilding,    alt: 'Yogeshwar Sr. Sec. School — Main Building', category: 'Campus'    },
+  { id: 2,  src: imgBuilding,          alt: 'School Building Exterior',                  category: 'Campus'    },
+  { id: 3,  src: imgDance,             alt: 'Students cultural dance performance',        category: 'Events'    },
+  { id: 4,  src: imgPhysicsLab,        alt: 'Physics Lab — practical session',            category: 'Labs'      },
+  { id: 5,  src: imgChemLab,           alt: 'Chemistry Lab — experiment in progress',     category: 'Labs'      },
+  { id: 6,  src: imgBioLab,            alt: 'Biology Lab — anatomical models',            category: 'Labs'      },
+  { id: 7,  src: imgLibraryReal,       alt: 'Library — students reading',                 category: 'Academics' },
+  { id: 8,  src: imgLibrary,           alt: 'Library interior',                           category: 'Academics' },
+  { id: 9,  src: imgMusicRoom,         alt: 'Dance and music room',                       category: 'Events'    },
+  { id: 10, src: imgAdd1,              alt: 'School Event Activity',                      category: 'Events'    },
+  { id: 11, src: imgAdd2,              alt: 'Campus View',                                category: 'Campus'    },
+  { id: 12, src: imgAdd3,              alt: 'Student Assembly',                           category: 'Campus'    },
+  { id: 13, src: imgAdd4,              alt: 'Classroom Environment',                      category: 'Academics' },
+  { id: 14, src: imgAdd5,              alt: 'School Details',                             category: 'Campus'    },
+  { id: 15, src: imgMerit,             alt: 'Merit List Poster',                          category: 'Academics' },
+  { id: 16, src: imgHiringAnnouncement, alt: 'School recruitment announcement',           category: 'Academics' },
 ];
 
 const categories = ['All', 'Campus', 'Labs', 'Events', 'Academics'];

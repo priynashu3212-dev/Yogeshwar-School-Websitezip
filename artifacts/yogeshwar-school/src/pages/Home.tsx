@@ -16,6 +16,7 @@ import imgChemLab from '@assets/image_1784871296800.png';
 import imgBioLab from '@assets/image_1784871308616.png';
 import imgLibraryStudents from '@assets/image_1784871323347.png';
 import imgHiringAnnouncement from '@assets/746369724_18074041580701721_1847276055017442437_n_1785133580159.jpg';
+import imgSchoolBuilding from '@assets/image_1785389592438.png';
 
 /* ── Animated counter ────────────────────────────────── */
 const Counter = ({
@@ -60,8 +61,9 @@ const Counter = ({
 
 /* ── Hero slideshow images ───────────────────────────── */
 const heroSlides = [
-  { src: imgSchoolFront,     label: 'Yogeshwar School' },
-  { src: imgBuilding,        label: 'Our Campus'       },
+  { src: imgSchoolFront,       label: 'Yogeshwar School' },
+  { src: imgSchoolBuilding,    label: 'School Campus'    },
+  { src: imgBuilding,          label: 'Our Campus'       },
   { src: imgPhysicsLab,      label: 'Physics Lab'      },
   { src: imgChemLab,         label: 'Chemistry Lab'    },
   { src: imgBioLab,          label: 'Biology Lab'      },
