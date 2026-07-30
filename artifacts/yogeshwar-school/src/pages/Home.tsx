@@ -96,7 +96,7 @@ export default function Home() {
   return (
     <Layout>
       {/* ── 1. HERO ──────────────────────────────────────── */}
-      <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-[#0F2044] pt-20">
+      <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-[#0F2044] pt-[112px] md:pt-[114px]">
         {/* Background slideshow */}
         <div className="absolute inset-0 z-0">
           {heroSlides.map((slide, i) => (
@@ -113,7 +113,11 @@ export default function Home() {
               />
             </motion.div>
           ))}
-          <div className="absolute inset-0 bg-[#0F2044]/40" />
+          {/* Dark overlay across entire slide */}
+          <div className="absolute inset-0 bg-[#0F2044]/50" />
+          {/* Extra solid band at the very top so background never shows behind the fixed navbar */}
+          <div className="absolute top-0 left-0 right-0 h-[114px] bg-[#0F2044]" />
+          {/* Bottom fade for text legibility */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0F2044]/90 via-[#0F2044]/20 to-transparent" />
         </div>
 
