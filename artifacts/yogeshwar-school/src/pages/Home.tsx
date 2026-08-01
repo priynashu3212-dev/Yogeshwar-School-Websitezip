@@ -61,15 +61,16 @@ const Counter = ({
 
 /* ── Hero slideshow images ───────────────────────────── */
 const heroSlides = [
-  { src: imgSchoolFront,       label: 'Yogeshwar School' },
-  { src: imgSchoolBuilding,    label: 'School Campus'    },
-  { src: imgBuilding,          label: 'Our Campus'       },
-  { src: imgPhysicsLab,      label: 'Physics Lab'      },
-  { src: imgChemLab,         label: 'Chemistry Lab'    },
-  { src: imgBioLab,          label: 'Biology Lab'      },
-  { src: imgLibraryStudents, label: 'Library'          },
-  { src: imgStaff,           label: 'Our Team'         },
-  { src: imgHiringAnnouncement, label: 'School Announcement' },
+  { src: imgSchoolFront,    label: 'Yogeshwar School', pos: 'object-center'  },
+  { src: imgSchoolBuilding, label: 'School Campus',    pos: 'object-center'  },
+  { src: imgBuilding,       label: 'Our Campus',       pos: 'object-center'  },
+  { src: imgPhysicsLab,     label: 'Physics Lab',      pos: 'object-center'  },
+  { src: imgChemLab,        label: 'Chemistry Lab',    pos: 'object-center'  },
+  { src: imgBioLab,         label: 'Biology Lab',      pos: 'object-center'  },
+  { src: imgLibraryStudents,label: 'Library',          pos: 'object-center'  },
+  { src: imgStaff,          label: 'Our Team',         pos: 'object-top'     },
+  { src: imgMusicRoom,      label: 'Music Room',       pos: 'object-center'  },
+  { src: imgDance,          label: 'Cultural Events',  pos: 'object-center'  },
 ];
 
 /* ── Stagger variants ────────────────────────────────── */
@@ -109,7 +110,7 @@ export default function Home() {
               <img
                 src={slide.src}
                 alt={slide.label}
-                className="w-full h-full object-cover object-center scale-105"
+                className={`w-full h-full object-cover scale-105 ${slide.pos}`}
               />
             </motion.div>
           ))}

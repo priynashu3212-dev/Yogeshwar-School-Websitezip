@@ -84,7 +84,7 @@ export default function VideoIntro({ onComplete }: Props) {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          padding: '2.5rem 1.5rem 0',
+          padding: '7.5rem 1.5rem 0',
           transition: 'opacity 1s ease, transform 1s ease',
           opacity: titleVisible ? 1 : 0,
           transform: titleVisible ? 'translateY(0)' : 'translateY(-20px)',
