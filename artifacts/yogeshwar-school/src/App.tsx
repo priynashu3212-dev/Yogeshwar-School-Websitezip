@@ -47,11 +47,23 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
+        {/* Website renders behind the intro, blurred until intro ends */}
+        <div
+          style={{
+            filter: introDone ? 'none' : 'blur(8px)',
+            transition: 'filter 0.8s ease',
+            // Prevent interaction while intro plays
+            pointerEvents: introDone ? 'auto' : 'none',
+          }}
+        >
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+            <Router />
+          </WouterRouter>
+          <Toaster />
+        </div>
+
+        {/* Intro overlay on top */}
         {!introDone && <VideoIntro onComplete={handleIntroComplete} />}
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
-          <Router />
-        </WouterRouter>
-        <Toaster />
       </TooltipProvider>
     </QueryClientProvider>
   );
