@@ -147,13 +147,6 @@ export default function Home() {
             animate="visible"
             className="max-w-5xl mx-auto"
           >
-            <motion.div variants={item} className="mb-8 flex justify-center">
-              <span className="inline-flex items-center gap-2 py-2 px-5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold tracking-[0.2em] uppercase shadow-xl">
-                <span className="w-2 h-2 rounded-full bg-[#F97316] animate-pulse" />
-                Admissions Open 2024-25
-              </span>
-            </motion.div>
-
             <motion.h1
               variants={item}
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] mb-5 tracking-tight"
