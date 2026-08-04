@@ -4,38 +4,71 @@ interface Props {
   onComplete: () => void;
 }
 
+type State = 'loading' | 'playing' | 'blocked' | 'error';
+
 export default function VideoIntro({ onComplete }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [state, setState] = useState<State>('loading');
   const [fading, setFading] = useState(false);
   const [showSkip, setShowSkip] = useState(false);
   const [titleVisible, setTitleVisible] = useState(false);
+  const doneRef = useRef(false);
 
   const finish = () => {
-    if (fading) return;
+    if (doneRef.current) return;
+    doneRef.current = true;
     setFading(true);
-    setTimeout(onComplete, 800);
+    setTimeout(onComplete, 700);
   };
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    // Show title after a short delay
     const titleTimer = setTimeout(() => setTitleVisible(true), 400);
-    // Show skip button after 2.5 s
-    const skipTimer = setTimeout(() => setShowSkip(true), 2500);
+    const skipTimer  = setTimeout(() => setShowSkip(true), 2500);
 
-    video.play().catch(() => finish());
+    const onCanPlay = () => {
+      video.play()
+        .then(() => setState('playing'))
+        .catch(() => {
+          // Autoplay blocked (common on low-end Android / data-saver mode)
+          setState('blocked');
+          setShowSkip(true);
+        });
+    };
 
-    const handleEnded = () => finish();
-    video.addEventListener('ended', handleEnded);
+    const onEnded = () => finish();
+
+    const onError = () => {
+      // Format not supported or network failure — skip gracefully
+      setState('error');
+      finish();
+    };
+
+    video.addEventListener('canplay', onCanPlay, { once: true });
+    video.addEventListener('ended', onEnded);
+    video.addEventListener('error', onError);
+
+    // Kick off load
+    video.load();
 
     return () => {
-      video.removeEventListener('ended', handleEnded);
+      video.removeEventListener('canplay', onCanPlay);
+      video.removeEventListener('ended', onEnded);
+      video.removeEventListener('error', onError);
       clearTimeout(titleTimer);
       clearTimeout(skipTimer);
     };
   }, []);
+
+  const handleTapToPlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.play()
+      .then(() => setState('playing'))
+      .catch(() => finish()); // still blocked — just skip
+  };
 
   return (
     <div
@@ -44,17 +77,19 @@ export default function VideoIntro({ onComplete }: Props) {
         inset: 0,
         zIndex: 9999,
         overflow: 'hidden',
-        transition: 'opacity 0.8s ease',
+        background: '#000',
+        transition: 'opacity 0.7s ease',
         opacity: fading ? 0 : 1,
         pointerEvents: fading ? 'none' : 'auto',
       }}
     >
-      {/* ── Video fills the screen ─────────────────────── */}
+      {/* ── Video ─────────────────────────────────────────── */}
       <video
         ref={videoRef}
-        src="/intro.mov"
+        poster="/intro-poster.jpg"
         playsInline
         muted
+        preload="auto"
         style={{
           position: 'absolute',
           inset: 0,
@@ -62,19 +97,25 @@ export default function VideoIntro({ onComplete }: Props) {
           height: '100%',
           objectFit: 'cover',
         }}
-      />
+      >
+        {/* MP4 first — universal support on all modern devices */}
+        <source src="/intro.mp4" type="video/mp4" />
+        {/* MOV fallback for Safari desktop */}
+        <source src="/intro.mov" type="video/quicktime" />
+      </video>
 
-      {/* ── Dark vignette overlay ──────────────────────── */}
+      {/* ── Vignette overlay ───────────────────────────────── */}
       <div
         style={{
           position: 'absolute',
           inset: 0,
           background:
-            'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.65) 100%)',
+            'linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 45%, rgba(0,0,0,0.65) 100%)',
+          pointerEvents: 'none',
         }}
       />
 
-      {/* ── School name title ──────────────────────────── */}
+      {/* ── School title ───────────────────────────────────── */}
       <div
         style={{
           position: 'absolute',
@@ -88,9 +129,9 @@ export default function VideoIntro({ onComplete }: Props) {
           transition: 'opacity 1s ease, transform 1s ease',
           opacity: titleVisible ? 1 : 0,
           transform: titleVisible ? 'translateY(0)' : 'translateY(-20px)',
+          pointerEvents: 'none',
         }}
       >
-        {/* Decorative top line */}
         <div
           style={{
             width: titleVisible ? '80px' : '0px',
@@ -104,11 +145,11 @@ export default function VideoIntro({ onComplete }: Props) {
           style={{
             color: '#f97316',
             fontFamily: 'Georgia, serif',
-            fontSize: 'clamp(0.7rem, 2.2vw, 0.85rem)',
+            fontSize: 'clamp(0.65rem, 2.2vw, 0.85rem)',
             letterSpacing: '0.35em',
             textTransform: 'uppercase',
             margin: '0 0 0.4rem',
-            textShadow: '0 1px 6px rgba(0,0,0,0.8)',
+            textShadow: '0 1px 8px rgba(0,0,0,0.9)',
           }}
         >
           Welcome to
@@ -122,7 +163,7 @@ export default function VideoIntro({ onComplete }: Props) {
             letterSpacing: '0.06em',
             textAlign: 'center',
             margin: '0 0 0.3rem',
-            textShadow: '0 2px 16px rgba(0,0,0,0.9)',
+            textShadow: '0 2px 18px rgba(0,0,0,0.95)',
             lineHeight: 1.2,
           }}
         >
@@ -132,13 +173,13 @@ export default function VideoIntro({ onComplete }: Props) {
           style={{
             color: '#e5e7eb',
             fontFamily: 'Georgia, serif',
-            fontSize: 'clamp(0.75rem, 2.8vw, 1.15rem)',
+            fontSize: 'clamp(0.7rem, 2.8vw, 1.15rem)',
             fontWeight: 400,
             letterSpacing: '0.18em',
             textAlign: 'center',
             textTransform: 'uppercase',
             margin: '0 0 0.6rem',
-            textShadow: '0 2px 10px rgba(0,0,0,0.9)',
+            textShadow: '0 2px 12px rgba(0,0,0,0.95)',
           }}
         >
           Senior Secondary School
@@ -146,16 +187,15 @@ export default function VideoIntro({ onComplete }: Props) {
         <p
           style={{
             color: '#f97316',
-            fontSize: 'clamp(0.6rem, 1.8vw, 0.75rem)',
+            fontSize: 'clamp(0.55rem, 1.8vw, 0.75rem)',
             letterSpacing: '0.25em',
             textTransform: 'uppercase',
-            textShadow: '0 1px 6px rgba(0,0,0,0.8)',
+            textShadow: '0 1px 6px rgba(0,0,0,0.9)',
             margin: 0,
           }}
         >
           Siwan, Kaithal — Est. Since 2009
         </p>
-        {/* Decorative bottom line */}
         <div
           style={{
             width: titleVisible ? '80px' : '0px',
@@ -167,33 +207,71 @@ export default function VideoIntro({ onComplete }: Props) {
         />
       </div>
 
-      {/* ── Skip button ────────────────────────────────── */}
-      {showSkip && (
+      {/* ── Tap-to-play overlay (autoplay blocked) ─────────── */}
+      {state === 'blocked' && (
+        <button
+          onClick={handleTapToPlay}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '1rem',
+            background: 'transparent',
+            border: 'none',
+            cursor: 'pointer',
+          }}
+        >
+          <div
+            style={{
+              width: '72px',
+              height: '72px',
+              borderRadius: '50%',
+              background: 'rgba(249,115,22,0.85)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 0 0 12px rgba(249,115,22,0.2)',
+            }}
+          >
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+          <span
+            style={{
+              color: '#fff',
+              fontSize: '0.9rem',
+              letterSpacing: '0.1em',
+              textShadow: '0 1px 6px rgba(0,0,0,0.8)',
+            }}
+          >
+            Tap to Play
+          </span>
+        </button>
+      )}
+
+      {/* ── Skip button ────────────────────────────────────── */}
+      {showSkip && state !== 'blocked' && (
         <button
           onClick={finish}
           style={{
             position: 'absolute',
-            bottom: '2rem',
-            right: '1.5rem',
+            bottom: '1.75rem',
+            right: '1.25rem',
             background: 'rgba(0,0,0,0.45)',
-            border: '1px solid rgba(255,255,255,0.35)',
+            border: '1px solid rgba(255,255,255,0.3)',
             color: '#fff',
-            padding: '0.45rem 1.1rem',
+            padding: '0.4rem 1rem',
             borderRadius: '999px',
             cursor: 'pointer',
-            fontSize: '0.8rem',
-            letterSpacing: '0.05em',
+            fontSize: '0.78rem',
+            letterSpacing: '0.04em',
             backdropFilter: 'blur(6px)',
-            transition: 'background 0.2s',
+            WebkitBackdropFilter: 'blur(6px)',
           }}
-          onMouseEnter={e =>
-            ((e.target as HTMLButtonElement).style.background =
-              'rgba(249,115,22,0.6)')
-          }
-          onMouseLeave={e =>
-            ((e.target as HTMLButtonElement).style.background =
-              'rgba(0,0,0,0.45)')
-          }
         >
           Skip ▶
         </button>
